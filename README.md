@@ -1,5 +1,5 @@
 ### Обучение на курсе Karpov Cources [DL engineer: CV](https://karpov.courses/deep-learning). Старт 02.02.2026.
-### Путевые заметки веду в [моем блоге в ТГ](t.me/dl_journey)
+### Путевые заметки веду в [моем блоге в ТГ](https://t.me/dl_journey)
 #### Актуальный прогресс:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
