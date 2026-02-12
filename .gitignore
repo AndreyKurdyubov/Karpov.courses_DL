@@ -1,2 +1,4 @@
 venv
 Base_DL/notMNIST_small
+wandb
+wandb_apikey
