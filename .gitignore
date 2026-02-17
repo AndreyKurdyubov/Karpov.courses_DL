@@ -2,3 +2,4 @@ venv
 Base_DL/notMNIST_small
 wandb
 wandb_apikey
+Base_DL/data
