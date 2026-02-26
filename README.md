@@ -44,7 +44,25 @@
 * Практика
     - Классификация предметов одежды из датасета FashionMNIST. Применение нормализации, dropout, scheduler
     - Выгрузка и визуализация метрик на wandb.ai
-    - Соххранение и загрузка параметров модели
+    - Сохранение и загрузка параметров модели
+</pre>
+</details>
+
+<details><summary> 4. Основы компьютерного зрения (CV) </summary> 
+<pre>
+* Теория
+    - Обзор типов задач CV
+    - Операция свертки. Сверточный слой. Receptive field
+    - Параметры свертки. kernel size, padding, stride, dilation
+    - Методы уменьшения размерности. Pooling, flattering
+    - Архитектуры сверточных сетей. Lenet VGG. Inception. ResNet
+* Практика
+    - Свертка, pooling
+    - Разбиение на батчи. Dataset и Dataloader
+    - Аугментация. RandomResizedCrop. Rotate. Hotizontal flip. Resize. Normalize
+    - Построение сверточной сети для классификации объектов из датасета CIFAR10
+    - Finetuning готовой модели на примере ResNet, mobilnet
+    - Исследование косинусной схожести эмбедингов объектов одного класса
 </pre>
 </details>
 
