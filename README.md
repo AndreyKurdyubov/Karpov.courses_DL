@@ -66,7 +66,7 @@
 </pre>
 </details>
 
-<details><summary> 5. Основы компьютерного зрения (CV) </summary> 
+<details><summary> 5. Типы задач CV </summary> 
 <pre>
 * Теория
     - Семантическая сегментация. Архитектура <a href="https://arxiv.org/abs/1505.04597v1">U-Net </a>
@@ -74,7 +74,7 @@
         1. Архитектура Fast-RCNN (<a href="https://arxiv.org/abs/1311.2524">Regions with CNN features</a>)
         2. FCOS (<a href="https://arxiv.org/abs/1904.01355">Fully Convolutional One-Stage Object Detection</a>)
     - Идентификация. Triplet Loss. ArcFace Loss.
-    - Перенос стиляю. Content Loss, Style Loss.
+    - Перенос стиля. Content Loss, Style Loss.
     - Генеративно - состязательные сети GAN
 * Практика
     - Метрика Intersection over Union (IoU), ConvTranspose2d, Upsampling
