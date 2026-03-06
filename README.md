@@ -55,7 +55,7 @@
     - Операция свертки. Сверточный слой. Receptive field
     - Параметры свертки. kernel size, padding, stride, dilation
     - Методы уменьшения размерности. Pooling, flattering
-    - Архитектуры сверточных сетей. Lenet VGG. Inception. ResNet
+    - Архитектуры сверточных сетей. Lenet VGG. Inception. ResNet (<a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning</a>)
 * Практика
     - Свертка, pooling
     - Разбиение на батчи. Dataset и Dataloader
@@ -63,6 +63,28 @@
     - Построение сверточной сети для классификации объектов из датасета CIFAR10
     - Finetuning готовой модели на примере ResNet, mobilnet
     - Исследование косинусной схожести эмбедингов объектов одного класса
+</pre>
+</details>
+
+<details><summary> 5. Основы компьютерного зрения (CV) </summary> 
+<pre>
+* Теория
+    - Семантическая сегментация. Архитектура <a href="https://arxiv.org/abs/1505.04597v1">U-Net </a>
+    - Детекция объектов
+        1. Архитектура Fast-RCNN (<a href="https://arxiv.org/abs/1311.2524">Regions with CNN features</a>)
+        2. FCOS (<a href="https://arxiv.org/abs/1904.01355">Fully Convolutional One-Stage Object Detection</a>)
+    - Идентификация. Triplet Loss. ArcFace Loss.
+    - Перенос стиляю. Content Loss, Style Loss.
+    - Генеративно - состязательные сети GAN
+* Практика
+    - Метрика Intersection over Union (IoU), ConvTranspose2d, Upsampling
+    - Реализация сети UNet
+    - Семантическая сегментация в PyTorch на датасетах NYUv2 и Pascal VOC
+    - Реализация DCGAN (<a href="https://arxiv.org/abs/1511.06434">Deep Convolutional Generative Adversarial Networks</a>)
+    - Генерация лиц на датасете Image Celeba
+    - Обусловленный GAN на датасете MNIST
+* Дополнительные материалы
+    <a href="https://nanonets.com/blog/semantic-image-segmentation-2020/">A Complete guide to Semantic Segmentation</a>
 </pre>
 </details>
 
