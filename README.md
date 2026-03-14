@@ -88,4 +88,28 @@
 </pre>
 </details>
 
+<details><summary> 6. Основы обработки естественного языка (NLP) </summary> 
+<pre>
+* Теория
+    - Основные задачи NLP: Классификация, синтез и преобразование текста
+    - Общий подход к решению NLP задач. Токены, эмбеддинги.
+    - Векторизация текста
+        1. Bag of Words (BOW)
+        2. Word to Vector (Word2Vec)
+    - Архитектуры: <a href="https://arxiv.org/abs/1408.5882">TextCNN</a>
+* Практика
+    - Задача регрессии: предсказание зарплаты по заголовку объявления на примере датасета <a href="https://www.kaggle.com/competitions/job-salary-prediction/data">Job Salary Prediction"</a>
+        1. Токенизация nltk.tokenize.WordPunctTokenizer()
+        2. Векторизация на word2vec-google-news-300
+        3. Паддинг
+        4. Векторизация категориальных фич: DictVectorizer
+    - Обобщение TextCNN для текстовых и категориальных фич
+        1. Текстовые фильтры со свертками разного размера nn.Conv1d
+        2. Полносвязные слои для категориальных фич
+    - Задача бинарной классификации отзывов на фильмы IMDB
+* Дополнительные материалы
+    Эмбеддинги <a href="https://radimrehurek.com/gensim/models/fasttext.html">fasttext</a>
+</pre>
+</details>
+
 
