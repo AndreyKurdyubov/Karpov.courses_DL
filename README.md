@@ -112,4 +112,21 @@
 </pre>
 </details>
 
+<details><summary> 7. Рекуррентные сети (RNN) и генерация текста </summary> 
+<pre>
+* Теория
+    - Выделение именованных сущностей NER (Named-Entity Recognition)
+    - Метрики NER. Типы и схемы подсчета ошибок 
+    - Архитектура RNN
+    - Генерация текста. Метрика Perplexity
+    - Задача seq2seq. Энкодер и декодер
+* Практика
+    - Ручная реализация однослойной RNN
+    - Генерация псевдонауыного текста по датасету <a href="https://www.kaggle.com/datasets/Cornell-University/arxiv">Arxiv</a>
+    - Задача перевода текста с английского на русский язык.
+* Дополнительные материалы
+    Метрики генерации текста BLEU, ROUGE, METEOR, BERTScore <a href="https://habr.com/ru/articles/1002218/">на habr</a>
+    ВВедение в метрику <a href="https://www.freecodecamp.org/news/what-is-rouge-and-how-it-works-for-evaluation-of-summaries-e059fb8ac840/">Rouge</a>. Гайд про <a href="https://dev.to/aws-builders/mastering-rouge-matrix-your-guide-to-large-language-model-evaluation-for-summarization-with-examples-jjg">Rouge</a> 
+</pre>
+</details>
 
