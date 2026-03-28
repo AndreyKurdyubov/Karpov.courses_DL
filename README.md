@@ -130,3 +130,18 @@
 </pre>
 </details>
 
+<details><summary> 8. Обзор трансформера и сетей на его основе </summary> 
+<pre>
+* Теория
+    - Механизм внимания (Attention). Вектора Query, Key, Value
+    - Архитектура <a href="https://arxiv.org/abs/1706.03762">Трансформер</a> 
+    - Positional encoding
+    - Обзор моделей GPT - 1, 2, 3; Bert
+* Практика
+    - Обзор платформы <a href="https://huggingface.co/">HuggingFace </a> 
+    - Библиотека transformers. transformers.pipeline, AutoModel, AutoTokenizer
+    - Генерация текста открытыми моделями GPT-2, LLAMA, Mistral
+    - Перевод Англ. - Рус. Helsinki-NLP/opus-mt-ru-en
+    - Дообучение головы Bert для классификации отзывов imdb
+</pre>
+</details>
