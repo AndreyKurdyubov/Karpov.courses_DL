@@ -145,3 +145,24 @@
     - Дообучение головы Bert для классификации отзывов imdb
 </pre>
 </details>
+
+<details><summary> 9. Погружение в LLM </summary> 
+<pre>
+* Теория
+    - Модели LLM 
+    - Квантизация LLM. AWQ, GPTQ, bitsandbytes
+* Практика
+    - Решение NLP задач с помощью Gemma 2B
+    - Построенме прототипа RAG системы, которая отвечает на вопросы пользователей по банку документов
+    - Деплой LLM 
+        1. Аренда облачного сервера
+        2. Деплой LLM модели
+        3. Деплой веб-интерфейса
+* Дополнительные материалы
+    - Про квантизацию <a href="https://huggingface.co/blog/4bit-transformers-bitsandbytes">4-bit and QLoRA</a> и <a href="https://kipp.ly/p/transformer-inference-arithmetic">Transformer Inference Arithmetic
+    - <a href="https://docs.vllm.ai/en/stable/">VLLM</a>
+    - Аргументы командной строки <a href="https://docs.vllm.ai/en/latest/serving/openai_compatible_server/#command-line-arguments-for-the-server">VLLM</a>
+</a>
+</pre>
+</details>
+
