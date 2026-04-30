@@ -1,6 +1,6 @@
-### Обучение на курсе Karpov Cources [DL engineer: CV](https://karpov.courses/deep-learning). Старт 02.02.2026.
-### Путевые заметки веду в [моем блоге в ТГ](https://t.me/dl_journey)
-#### Актуальный прогресс:
+### Курс [DL engineer: CV](https://karpov.courses/deep-learning) от Karpov Cources
+### Мой [блог в ТГ](https://t.me/dl_journey)
+### Старт прохождения 02.02.2026. Актуальный прогресс на 26.04.2026:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
 <pre>
@@ -166,3 +166,30 @@
 </pre>
 </details>
 
+#### Часть 2. CV
+<details><summary> 1. Изображение и классические методы работы с ним </summary> 
+<pre>
+* Теория
+    - Устройство матрицы камеры. Фильтр Байера. Дебайеризация
+    - Цветовые модели RGB, HSV
+    - Обработка изображений. Гамма-коррекция, эквализация гистограммы, CLAHE
+    - Изменение размеров изображения Nearest neighbor, билинейная интерполяция, <a href=https://disk.yandex.ru/i/pxl9PLfrdDe8SQ">INTER_AREA</a>
+    - Эффект алиасинга при downscaling
+    - Бинаризация. Глобальный и адаптивный пороги. <a href="https://www.geeksforgeeks.org/python/otsu-thresholding-using-opencv/">Метод Оцу</a>
+    - <a href="https://www.geeksforgeeks.org/python/python-opencv-morphological-operations/">Морфологические операции: эрозия, дилатация</a>
+    - Выделение границ. Операцтор Собеля. Алгоритм Кэнни. Контуры, <a href="https://docs.opencv.org/4.x/dc/dcf/tutorial_js_contour_features.html">аппроксимация примитивами</a>
+    - Гомография. Проективное преобразование
+* Практика
+    - Основы работы в OpenCV
+        1. Работа с файлами, <a href="https://docs.opencv.org/3.4/de/d25/imgproc_color_conversions.html">преобразование цветового формата изображения</a>
+        2. Морфологические операции
+        3. <a href="https://docs.opencv.org/4.x/d5/daf/tutorial_py_histogram_equalization.html">Выравнивание гистограмм</a> 
+        4. Методы борьбы с алиасингом: размытие, интерполяция
+        5. <a href="https://docs.opencv.org/4.x/d5/d0f/tutorial_py_gradients.html">Выделение границ и контуров</a>
+        6. Применение гомографии. <a href="https://www.geeksforgeeks.org/computer-vision/python-opencv-getrotationmatrix2d-function/">Поворот с маштабированием</a>
+    - Задача обнаружения координат штрихкодов на изображении
+* Дополнительные материалы
+    <a href="https://habr.com/ru/articles/130300/">Проективная геометрия и основы стереозрения</a>
+</a>
+</pre>
+</details>
