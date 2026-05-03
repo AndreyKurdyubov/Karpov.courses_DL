@@ -4,3 +4,4 @@ wandb
 wandb_apikey
 Base_DL/data
 huggingface
+*.zip
