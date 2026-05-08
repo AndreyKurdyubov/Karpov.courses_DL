@@ -193,3 +193,25 @@
 </a>
 </pre>
 </details>
+
+<details><summary> 2. Классификация: постановка задачи, CNN, NAS-CNN </summary> 
+<pre>
+* Теория
+    - Сверточные нейросети от AlexNet до семейства ResNets
+    - MobileNetV1. Depthwise свертка. Pointwise свертка
+    - MobileNetV2. Inverted Residual Block
+    - <a href="https://docs.pytorch.org/vision/main/models/mobilenetv3.html">MobileNetV3</a>. Neural Architecture Search (NAS). Squeeze Excitation Block. Функция активации hswish
+    - EfficientNets. Compound scaling. Fused MBConv
+* Практика
+    - Finetune моделей <a href="https://docs.pytorch.org/vision/main/models/generated/torchvision.models.resnet50.html">Resnet-50</a>, EfficientNet_b1
+    - Задача классификации TinyImageNet
+    - Реализация SE блока в pytorch
+    - Inverted residual block. Linear bottleneck
+    - Кастомная модификация MobileNetV3 в pytorch
+   * Дополнительные материалы
+    <a href="https://huggingface.co/papers/trending">Trending papers with code</a>
+    <a href="https://docs.pytorch.org/vision/stable/models.html">Torchvision modelss</a>
+    <a href="https://github.com/huggingface/pytorch-image-models">PyTorch Image Models</a>    
+</a>
+</pre>
+</details>
