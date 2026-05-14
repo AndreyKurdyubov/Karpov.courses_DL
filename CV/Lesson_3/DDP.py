@@ -1,8 +1,9 @@
-%%writefile train_ddp.py
+# %%writefile train_ddp.py
    
 import io
 import os
 from time import time
+from time import sleep
 from typing import Union, Callable, Optional
 
 import random
@@ -298,7 +299,7 @@ def mixup_cutmix_criterion(criterion, pred, labels_a, labels_b, lam):
 
 # training usinng Distributed Data Parallel
 def run_epoch_ddp(model, epoch, loader, criterion, optimizer=None, scheduler=None, 
-                  device=torch.device("cpu"), rank=0):
+                  device=torch.device("cpu"), rank=0, scaler=None):
     all_labels, all_preds = [], []
     loss_epoch = 0.
     
@@ -307,22 +308,32 @@ def run_epoch_ddp(model, epoch, loader, criterion, optimizer=None, scheduler=Non
         if isinstance(batch, tuple) and len(batch) == 4:
             images, labels_a, labels_b, lam = batch
             images, labels_a, labels_b = images.to(device), labels_a.to(device), labels_b.to(device)
-            logits = model(images)
-            loss = mixup_cutmix_criterion(criterion, logits, labels_a, labels_b, lam)
+
+            with torch.amp.autocast('cuda'):
+                logits = model(images)
+                loss = mixup_cutmix_criterion(criterion, logits, labels_a, labels_b, lam)
+                
             preds = torch.argmax(torch.softmax(logits, dim=-1), dim=-1)
             all_labels.extend(labels_a.cpu().numpy())
         else:
             images, labels = batch
             images, labels = images.to(device), labels.to(device)
-            logits = model(images)
-            loss = criterion(logits, labels)
+
+            with torch.amp.autocast('cuda'):
+                logits = model(images)
+                loss = criterion(logits, labels)
+                
             preds = torch.argmax(torch.softmax(logits, dim=-1), dim=-1)
             all_labels.extend(labels.cpu().numpy())
 
         if optimizer is not None:
             optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+            # loss.backward()
+            # optimizer.step()
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+            
             if scheduler is not None:
                 scheduler.step()
 
@@ -345,7 +356,7 @@ def run_epoch_ddp(model, epoch, loader, criterion, optimizer=None, scheduler=Non
 
 def train_ddp(model, n_epochs, train_loader, criterion, optimizer, scheduler=None, 
               val_loader=None, val_freq=10, save_best=True, save_name='model', 
-              device=torch.device("cpu"), rank=0):
+              device=torch.device("cpu"), rank=0, scaler=None):
     enable_validation = val_loader is not None
     best_val = 0.
     
@@ -356,7 +367,7 @@ def train_ddp(model, n_epochs, train_loader, criterion, optimizer, scheduler=Non
         if isinstance(train_sampler, DistributedSampler):
             train_sampler.set_epoch(epoch)  # 🔑 Важно для DDP: перемешивание данных между эпохами
             
-        train_loss, train_acc = run_epoch_ddp(model, epoch, train_loader, criterion, optimizer, scheduler, device, rank)
+        train_loss, train_acc = run_epoch_ddp(model, epoch, train_loader, criterion, optimizer, scheduler, device, rank, scaler=scaler)
 
         if rank == 0:
             print(f"Epoch {epoch+1}: Train loss: {train_loss:.4f} | Train acc: {train_acc*100:.2f}%")
@@ -365,16 +376,15 @@ def train_ddp(model, n_epochs, train_loader, criterion, optimizer, scheduler=Non
             model.eval()
             with torch.no_grad():
                 val_loss, val_acc = run_epoch_ddp(model, epoch, val_loader, criterion, 
-                                                  optimizer=None, scheduler=None, device=device, rank=rank)
+                                                  optimizer=None, scheduler=None, device=device, rank=rank, scaler=scaler)
             if rank == 0:
                 print(f"Val loss: {val_loss:.4f} | Val acc: {val_acc*100:.2f}%")
                 
-            if save_best and val_acc >= best_val:
+            if rank == 0 and save_best and val_acc >= best_val:
                 best_val = val_acc
                 # Сохраняем state_dict без DDP обёртки
                 torch.save(model.module.state_dict(), f"{save_name}.pth")
-                if rank == 0:
-                    print(f"💾 Saved best model at epoch {epoch+1}")
+                print(f"💾 Saved best model at epoch {epoch+1}")
 
         if rank == 0:
             print(f"⏱ Time spent on epoch: {time() - timer_start:.2f}s")
@@ -385,7 +395,7 @@ def train_ddp(model, n_epochs, train_loader, criterion, optimizer, scheduler=Non
 @dataclass
 class Config:
     seed: int = 24
-    batch_size: int = 200
+    batch_size: int = 1000
     img_size: int = 64
     n_epochs: int = 20
     lr: float = 3e-4
@@ -396,7 +406,7 @@ def main():
     world_size = int(os.environ['WORLD_SIZE'])
     local_rank = int(os.environ['LOCAL_RANK'])
     
-    dist.init_process_group(backend='nccl', rank=rank, world_size=world_size)
+    dist.init_process_group(backend='nccl', rank=rank, world_size=world_size, device_id=local_rank)
     torch.cuda.set_device(local_rank)
     device = torch.device(f'cuda:{local_rank}')
     
@@ -411,16 +421,41 @@ def main():
     
     # --- Загрузка данных (в каждом процессе) ---
     data_path = "/kaggle/input/datasets/andreykurdyubov/tiny-imagenet/tiny_imagenet/train-00000-of-00001-1359597a978bc4fa.parquet"
-    df = pd.read_parquet(data_path, engine='fastparquet')
-    df.drop(columns=['image.path'], inplace=True)
+    cache_path = "/tmp/train_cached.parquet"
+    if rank == 0 and not os.path.exists(cache_path):
+        try:
+            print(f"💾 Caching dataset to {cache_path}...")
+            df_orig = pd.read_parquet(data_path, engine='fastparquet')
+            if 'image.path' in df_orig.columns:
+                df_orig.drop(columns=['image.path'], inplace=True)
+            df_orig.to_parquet(cache_path, engine='fastparquet')
+        except Exception as e:
+            print(f"⚠️ Cache failed: {e}")
+            
+    # Ждём появления файла (безопаснее, чем dist.barrier() при файловых операциях)
+    timeout = 30
+    start_wait = time()
+    while not os.path.exists(cache_path):
+        if time() - start_wait > timeout:
+            raise RuntimeError(f"Cache file not created within {timeout}s")
+        sleep(0.1)
+    
+    df = pd.read_parquet(cache_path, engine='fastparquet')
+    # df = pd.read_parquet(data_path, engine='fastparquet')
+    # df.drop(columns=['image.path'], inplace=True)
     train_df, val_df = stratified_train_val_split(df, train_share=0.9, seed=config.seed)
     
     # transforms
     train_transform = transforms.Compose([
         # transforms.RandAugment(num_ops=2, magnitude=9),
-        transforms.TrivialAugmentWide(),
+        # transforms.TrivialAugmentWide(),
+        # Transforms автора
+        transforms.RandomCrop(size=(56, 56)),
+        transforms.RandomHorizontalFlip(0.5),
+        # transforms.RandAugment(num_ops=2, magnitude=9),
         transforms.PILToTensor(),
-        transforms.ToDtype(dtype=torch.float32, scale=True)
+        transforms.ToDtype(dtype=torch.float32, scale=True),
+        transforms.RandomErasing()
     ])
 
     val_transform = transforms.Compose([
@@ -453,18 +488,19 @@ def main():
         train_ds, 
         batch_size=config.batch_size, 
         sampler=train_sampler,
-        num_workers=2, 
-        pin_memory=True, 
+        num_workers=4, 
+        pin_memory=False,
+        persistent_workers=True,
         drop_last=True, 
         worker_init_fn=seed_worker,
-        collate_fn=lambda batch: collate_fn(batch, alpha=0.3, choice_mixup=True),
+        # collate_fn=lambda batch: collate_fn(batch, alpha=0.3, choice_mixup=True),
     )
     
     val_loader = DataLoader(
         val_ds, 
         batch_size=config.batch_size, 
         sampler=val_sampler,                           
-        num_workers=2, 
+        num_workers=4, 
         pin_memory=True
     )
     
@@ -473,17 +509,19 @@ def main():
     
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)
+    scaler = torch.amp.GradScaler('cuda')
+    
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
         optimizer, 
         T_max=config.n_epochs * len(train_loader),
     eta_min=1e-5)
     
     if rank == 0:
-        wandb.init(project="CV-hw3-TinyImageNet", name="DDP Triv + MixUp", config=config.__dict__)
+        wandb.init(project="CV-hw3-TinyImageNet", name="DDP Simple Augs 4workers batch=1000", config=config.__dict__)
         
     model = train_ddp(model, config.n_epochs, train_loader, criterion, optimizer, scheduler,
               val_loader=val_loader, val_freq=1, save_best=True, save_name="model_ddp", 
-              device=device, rank=rank)
+              device=device, rank=rank, scaler=scaler)
     
     if rank == 0:
         wandb.finish()
