@@ -215,3 +215,35 @@
 </a>
 </pre>
 </details>
+
+<details><summary> 3. Как построить классный пайплайн обучения сети </summary> 
+<pre>
+* Теория
+    - <a href="https://www.deeplearning.ai/ai-notes/initialization/index.html">Инициализация весов</a> по Хавьеру и Каймингу
+    - CrossEntropy Loss, Focal Loss, Generalized Cross Entropy Loss
+    - Adam, <a href="https://docs.pytorch.org/docs/main/generated/torch.optim.AdamW.html">AdamW</a>, SGD с моментом
+    - <a href="https://docs.pytorch.org/tutorials/recipes/recipes/amp_recipe.html">Autpomatic Mixed Precision (AMP)</a>. Autocast + GradScaler
+    -Shedulers. StepLR, <a href="https://docs.pytorch.org/docs/2.11/generated/torch.optim.lr_scheduler.CosineAnnealingLR.html">CosineAnnealingLR</a>. Планировщики с прогревом
+    - Техники регуляризцации
+        1. Weight decay
+        2. <a href="https://docs.pytorch.org/docs/2.11/generated/torch.optim.swa_utils.AveragedModel.html">AveragedModel</a>. Экспоненциальное скользяцее среднее (EMA)
+        3. Label smoothing
+        4. Random Erasing
+        5. Mixers. MixUp, CutMix
+    - Аугментации
+        1. AutoAugment
+        2. RandAugment
+        3. <a href="https://docs.pytorch.org/vision/main/generated/torchvision.transforms.TrivialAugmentWide.html">TrivialAugment</a>
+* Практика
+    - Многоклассовая классификация с несбалансированными классами - распознавание дорожных знаков
+        1. Аугментации
+        2. Выравнивание сэмплирования. <a href="https://docs.pytorch.org/docs/2.12/data.html#torch.utils.data.WeightedRandomSampler">WeightedRandomSampler</a> 
+    - Улучшение пайплайна обучения собственной кастомной модели MobileNet на TinyImageNet 
+    - Реализация MixUp и MixCut аугментаций + модификация критерия кросс-энтропии
+    - Запуск обучения в Kaggle с использованием <a href="https://docs.pytorch.org/tutorials/intermediate/ddp_tutorial.html">Distributed Data Parallel (DDP)</a> для 2 GPU T4. CPU bottleneck!
+    - Подбор lr шедулера
+    - SGD vs Adamю. SGD победил
+    - <a href="https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/">Stochastic Weight Averaging (SWA)</a>   
+</a>
+</pre>
+</details>
