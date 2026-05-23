@@ -247,3 +247,32 @@
 </a>
 </pre>
 </details>
+
+<details><summary> 4. Классификация: VIT, CLIP </summary> 
+<pre>
+* Теория
+    - Классический <a href="https://arxiv.org/abs/1706.03762">трансформер</a> :
+        1. Энкодер и декодер
+        2. Self, cross и masked self attention 
+        3. Position encoding
+        4. Матрицы Query, Key, Value
+        5. Layer Norm 
+    - <a href="https://research.google/blog/transformers-for-image-recognition-at-scale/">Vision transformer</a> <a href="https://arxiv.org/abs/2010.11929">(ViT)</a>:
+        1. Линейная проекция векторизованных патчей
+        2. Encoder block
+        3. CLS - токен
+        4. MLP head
+    - <a href="https://arxiv.org/abs/2103.00020">Contrastive Language-Image Pre-training</a> (CLIP):
+        1. Image Encoder
+        2. Text Encoder
+        3. Contrastive learning. Similaruty matrix
+        4. Zero- и few-shot классификация
+        5. Linear probing
+* Практика
+    - Реализация ViT в pytorch
+    - Open-source имплементации CLIP - open-clip
+    - Zero shot классификация Signs dataset
+    - Zero shot на TunyImageNet
+</a>
+</pre>
+</details>
