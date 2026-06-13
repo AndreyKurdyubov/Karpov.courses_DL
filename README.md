@@ -1,6 +1,6 @@
 ### Курс [DL engineer: CV](https://karpov.courses/deep-learning) от Karpov Cources
 ### Мой [блог в ТГ](https://t.me/dl_journey)
-### Старт прохождения 02.02.2026. Актуальный прогресс на 26.04.2026:
+### Старт прохождения 02.02.2026. Актуальный прогресс на 13.06.2026:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
 <pre>
@@ -251,7 +251,7 @@
 <details><summary> 4. Классификация: VIT, CLIP </summary> 
 <pre>
 * Теория
-    - Классический <a href="https://arxiv.org/abs/1706.03762">трансформер</a> :
+    - Классический <a href="https://arxiv.org/abs/1706.03762">трансформер</a>:
         1. Энкодер и декодер
         2. Self, cross и masked self attention 
         3. Position encoding
@@ -273,6 +273,34 @@
     - Open-source имплементации CLIP - open-clip
     - Zero shot классификация Signs dataset
     - Zero shot на TunyImageNet
+</a>
+</pre>
+</details>
+
+<details><summary> 5. Сегментация </summary> 
+<pre>
+* Теория
+    - Типы сегментации: семантическая, инстанс, паноптик. <a href-="https://arxiv.org/pdf/2001.05566">Обзор</a>
+    - Метрики и функциии потерь: Жаккар (IoU), Дайс (Dice)
+    - Архитектуры:
+        1. <a href="https://arxiv.org/pdf/1505.04597">UNET</a>
+        2. <a href="https://arxiv.org/pdf/1707.03718">LinkNet</a> ~ UNET(concat -> add))
+        3. <a href="https://arxiv.org/pdf/1606.00915">DeepLab</a>. <a href="https://arxiv.org/pdf/1706.05587">DeeplabV3</a>
+        4. Семейство Feature Pyramid Networks (<a href="https://arxiv.org/pdf/1612.03144">FPN</a>)
+        5. <a href="https://arxiv.org/pdf/1908.07919">HRNet</a>
+    - Segment Anything Model (<a href="https://arxiv.org/pdf/2304.02643">SAM</a>)
+* Практика
+    - Сегментация на датасете <a href="https://huggingface.co/datasets/sayakpaul/nyu_depth_v2">NYUv2</a>. Подбор подходящей архитектуры: UNET, UNET++, FPN
+    - SAM - использование точек (кликов) и боксов как пользовательских промтов для zero-shot сегментации чего угодно
+    - Реализация собственной версии UNET для решения задачи сегментации на Oxford Pet dataset:
+        1. Уточнение масок при помощи SAM
+        2. Адаптирование сверточного блока MBconv из <a href="https://arxiv.org/pdf/1801.04381">MobileNetV2</a>
+        3. Реализация <a href="https://arxiv.org/pdf/1807.06521">CBAM: Convolutional Block Attention Module</a> - блока канального и пространственного внимания
+        4. Реализация Res-блока с CBAM
+        5. Обучение сети используя FocalLoss + DiceLoss
+* Дополнительные материалы:
+    <a href="https://d2l.ai/chapter_computer-vision/transposed-conv.html">Обратная свертка</a>. <a href="https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md">Анимация сверток</a>. <a href="https://arxiv.org/pdf/1511.07122v3">Dilated/Atrous свертки</a>. 
+    <a href="https://arxiv.org/pdf/1901.02446">Panoptic FPN</a>
 </a>
 </pre>
 </details>
