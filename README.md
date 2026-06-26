@@ -1,6 +1,6 @@
 ### Курс [DL engineer: CV](https://karpov.courses/deep-learning) от Karpov Cources
 ### Мой [блог в ТГ](https://t.me/dl_journey)
-### Старт прохождения 02.02.2026. Актуальный прогресс на 13.06.2026:
+### Старт прохождения 02.02.2026. Актуальный прогресс на 26.06.2026:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
 <pre>
@@ -302,5 +302,23 @@
     <a href="https://d2l.ai/chapter_computer-vision/transposed-conv.html">Обратная свертка</a>. <a href="https://github.com/vdumoulin/conv_arithmetic/blob/master/README.md">Анимация сверток</a>. <a href="https://arxiv.org/pdf/1511.07122v3">Dilated/Atrous свертки</a>. 
     <a href="https://arxiv.org/pdf/1901.02446">Panoptic FPN</a>
 </a>
+</pre>
+</details>
+
+<details><summary> 6. Детекция: метрики, two-stage, one-stage </summary> 
+<pre>
+* Теория
+    - Типы боксов детектирования: Horizontal Bounding Box (HBB), Oriented Bounding Box (OBB), Polygon
+    - Датасеты: Pascal VOC, MS COCO, ILSVRC, Objects365, Open ImagesDataset (OID) 
+    - Метрики: IoU, mAP - mean Average Precision. AP_50, AP_75, AP (mean by IoU 50:5:95)
+    - Two-stage детекторы: R-CNN -> Fast R-CNN -> Faster R-CNN -> <a href="https://arxiv.org/abs/1703.06870">Mask R-CNN</a>
+    - Особенности архитектуры two-stage:
+        1. Генерация боксов - кандидатов RoI=Regions of Interest  (by Selective search/RPN anchors)
+        2. Non Maximum Suppression (NMS) - отфильтровываем похожие боксы по IoU
+        3. RoI Pooling / RoI Allign - проекция боксов на Feature Map
+        4. Классификация боксов + уточнение их координат + instance сегментация (только в Mask R-CNN)
+* Практика
+    - Transfer learning Mask R-CNN на датасете <a href="https://www.cis.upenn.edu/%7Ejshi/ped_html/">Penn-Fudan</a>
+    - Ручная реализация метрики mAP
 </pre>
 </details>
