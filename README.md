@@ -1,6 +1,6 @@
 ### Курс [DL engineer: CV](https://karpov.courses/deep-learning) от Karpov Cources
 ### Мой [блог в ТГ](https://t.me/dl_journey)
-### Старт прохождения 02.02.2026. Актуальный прогресс на 26.06.2026:
+### Старт прохождения 02.02.2026. Актуальный прогресс на 16.07.2026:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
 <pre>
@@ -320,5 +320,38 @@
 * Практика
     - Transfer learning Mask R-CNN на датасете <a href="https://www.cis.upenn.edu/%7Ejshi/ped_html/">Penn-Fudan</a>
     - Ручная реализация метрики mAP
+</pre>
+</details>
+
+<details><summary> 7. Детекция: one-stage, anchor-free детекторы, YOLO </summary> 
+<pre>
+* Теория
+    - One-stage детекторы: 
+        1. <a href="https://arxiv.org/pdf/1506.02640">YOLO v1</a> 448x448 -> 7x7x30 - предсказание 20 классов, по 2 объекта в каждой ячейке финального тензора (всего 98 объектов)
+        2. <a href="https://arxiv.org/pdf/1512.02325">SSD</a> (single shot detector) - предсказания с фичемап разного размера 
+        3. FPN (feature pyramid network) - переагрегация фичемап разного размера
+        4. <a href="https://arxiv.org/pdf/1708.02002">RetinaNet</a> - FPN like + FocalLoss
+    - Anchor-free детекторы:
+        1. <a href="https://arxiv.org/pdf/1904.07850">CenterNet</a> - Objects as points, предсказание центра каждого объекта и размера бокса, без якорей и NMS
+        2. <a href="https://arxiv.org/pdf/1904.01355">FCOS</a> - Fully Convolutional One-Stage Object Detection - классификация + предсказание центральности + регрессия на ширину и высоту объекта
+        3. <a href="https://arxiv.org/pdf/2005.12872">DETR</a> - detection transformer - первый трансформер для детекции. Энкодер кодирует части изображения. Декодер принимает object queries и предсказывют для них "объект/не объект" при помощи венгерского алгоритма. 
+    - <a href="https://arxiv.org/pdf/2304.00501v1">YOLO family</a>:
+        1. v1-v3 (2015-2018) Original YOLO by Joseph Redmon
+        2. <a href="https://arxiv.org/pdf/2004.10934">v4</a> (2020) by Alexey Bochkovskiy et al.
+        3. v5+ (2020 - ...) by <a href="https://github.com/ultralytics/ultralytics">Ultralytics</a> 
+    - Портирование сетей для инференса: ONNX, TensorRT, OpenVINO
+* Практика
+    - Знакомство с проектом Ultralytics
+    - Конфигурации моделей и процесса обучения
+    - Механизм scale и multi-scale
+    - Механизм mosaic и close mosaic
+    - Распределение весов у лоссов во время обучения
+    - Критерии качества модели, fitness-функция
+* Дополнительные материалы
+    <a href="https://arxiv.org/pdf/1905.05055">Object Detection in 20 Years: A Survey</a>
+    <a href="https://blog.roboflow.com/guide-to-yolo-models/">Особенности сетей YOLO</a>
+    <a href="https://docs.ultralytics.com/ru/integrations/onnx">Экспорт YOLO в ONNX</a>
+    <a href="https://docs.openvino.ai/2024/index.html">Дока OpenVINO</a>
+    <a href="https://developer.nvidia.com/blog/speeding-up-deep-learning-inference-using-tensorflow-onnx-and-tensorrt/">Speeding Up Deep Learning Inference Using TensorFlow, ONNX, and NVIDIA TensorRT</a>
 </pre>
 </details>
