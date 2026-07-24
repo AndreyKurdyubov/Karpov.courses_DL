@@ -7,3 +7,6 @@ huggingface
 *.zip
 *.parquet
 signs
+
+!CV/Lesson_8/train_meta.parquet
+!CV/Lesson_8/test_meta_author.parquet
