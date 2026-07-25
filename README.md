@@ -1,6 +1,6 @@
 ### Курс [DL engineer: CV](https://karpov.courses/deep-learning) от Karpov Cources
 ### Мой [блог в ТГ](https://t.me/dl_journey)
-### Старт прохождения 02.02.2026. Актуальный прогресс на 16.07.2026:
+### Старт прохождения 02.02.2026. Актуальный прогресс на 25.07.2026:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
 <pre>
@@ -353,5 +353,22 @@
     <a href="https://docs.ultralytics.com/ru/integrations/onnx">Экспорт YOLO в ONNX</a>
     <a href="https://docs.openvino.ai/2024/index.html">Дока OpenVINO</a>
     <a href="https://developer.nvidia.com/blog/speeding-up-deep-learning-inference-using-tensorflow-onnx-and-tensorrt/">Speeding Up Deep Learning Inference Using TensorFlow, ONNX, and NVIDIA TensorRT</a>
+</pre>
+</details>
+
+<details><summary> 8. Face recognition/ ReID/ Image retrieval </summary> 
+<pre>
+* Теория
+    - Постановка задачи, Open set vs Closed set problem. Верификация (1 v 1) и идентификация (1 v N).
+    - Метрики: TPIR at FPIR=10^(-N) - какую долю правильных идентификаций (TPIR) мы получаем при строго заданном уровне ложных срабатываний (FPIR)
+    - Функции потерь Mertic Learning (группировка на гиперсфере):
+        1. Contrastive Loss
+        2. Triplet Loss
+        3. Margin-based Losses: ArcFace
+    - Knowledge Distillation - передача "навыка" от тяжелой сети (учителя) более легкой (ученику). Логиты сети учителя смягчаются Softmax с температурой и являются таргетами для ученика.
+    - Re-Identification - image query -> поиск того же самого объекта с других ракурсов
+    - Image retrieval - image query -> список похожих изображений в базе
+* Практика
+    - Распознвавние лиц с помощью InsightFace - датасет <a href ="https://www.kaggle.com/datasets/amiralikalbasi/images-of-friends-character-for-face-recognition/data">Friends</a>
 </pre>
 </details>
