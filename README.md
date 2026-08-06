@@ -1,6 +1,6 @@
 ### Курс [DL engineer: CV](https://karpov.courses/deep-learning) от Karpov Cources
 ### Мой [блог в ТГ](https://t.me/dl_journey)
-### Старт прохождения 02.02.2026. Актуальный прогресс на 25.07.2026:
+### Старт прохождения 02.02.2026. Актуальный прогресс на 06.08.2026:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
 <pre>
@@ -370,5 +370,34 @@
     - Image retrieval - image query -> список похожих изображений в базе
 * Практика
     - Распознвавние лиц с помощью InsightFace - датасет <a href ="https://www.kaggle.com/datasets/amiralikalbasi/images-of-friends-character-for-face-recognition/data">Friends</a>
+</pre>
+</details>
+
+<details><summary> 9. Трекинг </summary> 
+<pre>
+* Теория
+    - Multiple Object Tracking (MOT). Метрики:
+        1. MOT Accuracy. MOTA = 1 - (FN + FP + IDSW)/gtDet. MOTA не учитывает True Positives, не отражает фрагментацию и не оценивает точность локализации предсказанных боксов относительно ground truth.
+        2. MOT Precision. MOTP = Sum(Overlap(pred, gt))/Matches. 
+        3. IDF1 - F1 для детекции
+        4. HOTA (Higher Order Tracking Accuracy). Учитывает как качество детекции, так и качество ассоциации.
+    - Simple Online and Real-Time Tracker (<a href="https://arxiv.org/pdf/1602.00763">SORT</a>) - быстрый и простой треккер, решает проблемы неудачной локализации, FP и FN, но не уменьшает ID switches. Шаги:
+        1. Детекция
+        2. <a href="https://habr.com/ru/companies/singularis/articles/516798/">Фильтр Калмана</a> - коррекция данных с детектора
+        3. Ассоциация - венгерский алгоритм
+    - SORT - type трекеры:
+        1. DeepSort - SORT + отдельная простая CNN для ReID
+        2. FairMOT - Детектор anchor-free как в Centernet + голова для дескриптора
+        3. ByteTrack - Продление трека для боксов с низким IoU
+        4. BoT SORT- учет движения камеры.
+    - Single Object Tracking (SOT). Особенности:
+        1. Детектор работает только на первом кадре, на последующих ищется объект в окрестности бокса с предыдущего кадра. Для этого часто используются симские сети, но есть и классические методы OpenCV
+        2. Нет необходимаости использовать IoU, так как нет ассоциации между разными обхектами
+* Практика
+    - SORT изнутри: 
+        1. Фильтр Калмана
+        2. Фаза ассоциации
+    - DeepSORT tracker на MOT15 challenge - трекинг людей в торговом центре. Подсчет количества пересечений линии.
+
 </pre>
 </details>
