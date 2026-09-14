@@ -1,6 +1,6 @@
 ### Курс [DL engineer: CV](https://karpov.courses/deep-learning) от Karpov Cources
 ### Мой [блог в ТГ](https://t.me/dl_journey)
-### Старт прохождения 02.02.2026. Актуальный прогресс на 02.09.2026:
+### Старт прохождения 02.02.2026. Актуальный прогресс на 14.09.2026:
 #### Часть 1. Base DL
 <details><summary> 1. Обзор Deep Learning </summary> 
 <pre>
@@ -454,5 +454,25 @@
 * Практика
     - Распознавание штрихкодов
     - Реализация собственной CRNN на базе ResNet50 и GRU
+</pre>
+</details>
+
+<details><summary> 12. OCR </summary> 
+<pre>
+* Теория
+    - GAN (Generative Adversarial Networks), генеративно-состязательные сети:
+        1. <a href="https://arxiv.org/pdf/1411.1784">cGAN (conditional GAN)</a> принимает на вход метку или вектор-эмбеддинг, обуславливая генерацию конкретного класса
+        2. <a href="https://arxiv.org/pdf/1611.07004">pix2pix</a> image-to-image модель, которая использует PatchGAN для улучшения четкости деталей. Требует большого датасета пар картинок
+        3. <a href="https://arxiv.org/pdf/1703.10593">CycleGAN</a> image-to-image модель, использующая Cycle consistency loss с обратным переводом: A->B->A' vs A. Подходит для смены стиля (превратить лошадь в зебру или зиму в лето), не требует пар картинок, достаточно собрать 2 папки с картинками из двух доменов.
+        4. <a href="https://arxiv.org/pdf/1812.04948">StyleGAN</a> - сеть от NVIDIA, создающая картинки с нуля. Использует слой AdaIN для переноса стиля через статистики feature maps
+    - Диффузионные модели:
+        1. <a href="https://arxiv.org/pdf/2006.11239">DDPM (Denoising Diffusion Probabilistic Models)</a> - использует прямую диффузию для зашумления изображения и обратную - для восстановления исходной картинки. Guidance позволяет обуславливать генерацию на конкретный класс. Для генерации требуется 1000 прогонов сети.
+        2. <a href="https://arxiv.org/pdf/2010.02502">DDIM (Denoising Diffusion Implicit Models)</a> - сделали процесс генерации немарковским, ускорив тем самым генерацию в десятки раз
+        3. <a href="https://arxiv.org/pdf/2112.10752">LDM (Latent Diffusion Models)</a> - вместо изображения создается латентный вектор, который потом декодируется в изображение.
+        4. Stable Diffusion - идея из LDM + обуславливание на эмбеддинги из CLIP + cross-attention. Генерирует картинки по промпту.
+        5. ControlNet - модель как в Stable Diffusion + parallel network (trainable copy) для большего контроля над отдельными аспектами изображения
+* Практика
+    - Реализация DDPM в pytorch. Обучение на MNIST.
+    - Применение модели Stable Diffusion 1.5 из diffusers для генерации изображений. Работа с Callbacks и интерполяция латентных векторов.
 </pre>
 </details>
