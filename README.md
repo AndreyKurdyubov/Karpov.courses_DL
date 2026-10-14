@@ -457,7 +457,7 @@
 </pre>
 </details>
 
-<details><summary> 12. OCR </summary> 
+<details><summary> 12. Генерация </summary> 
 <pre>
 * Теория
     - GAN (Generative Adversarial Networks), генеративно-состязательные сети:
